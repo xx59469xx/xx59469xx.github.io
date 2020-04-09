@@ -3,7 +3,7 @@
 
 
 <head>
-    <meta charset="utf-8">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
     <meta name="keywords" content="SWUST OJ 493: PostOffice, 曲径通幽处">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,12 +29,11 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
     
-<meta name="generator" content="Hexo 4.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 4.2.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 <body>
-    <header class="navbar-fixed">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="navbar-fixed">
     <nav id="headNav" class="bg-color nav-transparent">
         <div id="navContainer" class="nav-wrapper container">
             <div class="brand-logo">
@@ -466,23 +465,23 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <pre class="line-numbers language-c++"><code class="language-c++">#include<iostream>
-#include<cmath>
+                <pre><code class="c++">#include&lt;iostream&gt;
+#include&lt;cmath&gt;
 using namespace std;
 void quicksort(int a[],int l,int r)
 {
-    if(l<r)
+    if(l&lt;r)
     {
         int i=l,j=r,key=a[i];
-        while(i<j)
+        while(i&lt;j)
         {
-            while(i<j&&a[j]>=key)
+            while(i&lt;j&amp;&amp;a[j]&gt;=key)
                 j--;
-            if(i<j)
+            if(i&lt;j)
                 a[i]=a[j];
-            while(i<j&&a[i]<key)
+            while(i&lt;j&amp;&amp;a[i]&lt;key)
                 i++;
-            if(i<j)
+            if(i&lt;j)
                 a[j]=a[i];
         }
         a[i]=key;
@@ -493,19 +492,19 @@ void quicksort(int a[],int l,int r)
 int main()
 {
     int n,x[10000],y[10000],x1,y1,sum=0;
-    cin>>n;
-    for(int i=0; i<n; i++)
-        cin>>x[i]>>y[i];
+    cin&gt;&gt;n;
+    for(int i=0; i&lt;n; i++)
+        cin&gt;&gt;x[i]&gt;&gt;y[i];
     quicksort(x,0,n-1);
     quicksort(y,0,n-1);
     x1=x[n/2];
     y1=y[n/2];
-    for(int i=0;i<n;i++)
+    for(int i=0;i&lt;n;i++)
         sum+=abs(x[i]-x1)+fabs(y[i]-y1);
-    cout<<sum<<endl;
+    cout&lt;&lt;sum&lt;&lt;endl;
     return 0;
 }
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 
             </div>
             <hr/>
@@ -749,12 +748,12 @@ int main()
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            #include
-#include
+                            #include&lt;iostream&gt;
+#include&lt;cmath&gt;
 using namespace std;
 void quicksort(int a[],int l,int r)
 {
-    if(l
+    if(l&lt;r)
                         
                     </div>
                     <div class="publish-info">
@@ -1168,7 +1167,7 @@ $(function () {
     
     
     
-    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    <script src="/libs/instantpage/instantpage.js" type="module"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
     
 
 </body>
