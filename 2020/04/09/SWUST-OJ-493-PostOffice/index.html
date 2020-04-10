@@ -465,7 +465,10 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <pre><code class="c++">#include&lt;iostream&gt;
+                <p>本题计算距离的方式为<code>|x1-x2|+|y1-y2|</code>，因此可将二维距离问题转换为一维距离问题，即在x方向和y方向分别寻找最近距离。</p>
+<p>我们来研究一下在一维上的最近距离问题。</p>
+<p>在一维空间中，若只存在2个点，则若存在一点P使得两点到P点的距离之和最小，点P一定在两点之间。根据分治法的思想，若存在3点及以上的点，可先保证距离最远的两点到点P的距离之和最小，再保证距离第二远的两点到点P的距离之和最小，依次类推，最终剩下2个或1个点，若保证点P到此两点或一点的距离之和最小，则点p在这两点之间或就是那一点。综上，我们只需要按x和y方向分别对坐标排序，然后找出“中点”即可。改点即是到平面上所有点距离之和最小的点.</p>
+<pre><code class="cpp">#include&lt;iostream&gt;
 #include&lt;cmath&gt;
 using namespace std;
 void quicksort(int a[],int l,int r)
@@ -748,12 +751,9 @@ int main()
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            #include&lt;iostream&gt;
-#include&lt;cmath&gt;
-using namespace std;
-void quicksort(int a[],int l,int r)
-{
-    if(l&lt;r)
+                            本题计算距离的方式为|x1-x2|+|y1-y2|，因此可将二维距离问题转换为一维距离问题，即在x方向和y方向分别寻找最近距离。
+我们来研究一下在一维上的最近距离问题。
+在一维空间中，若只存在2个点，则若存在一点P使得两点到P点的距离之和最
                         
                     </div>
                     <div class="publish-info">
