@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="SWUST OJ 493: PostOffice, 曲径通幽处">
+    <meta name="keywords" content="Tags, 曲径通幽处">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>SWUST OJ 493: PostOffice | 曲径通幽处</title>
+    <title>Tags | 曲径通幽处</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -306,12 +306,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">SWUST OJ 493: PostOffice</h1>
+                    <h1 class="description center-align post-title">tags</h1>
                 </div>
             </div>
         </div>
@@ -448,7 +448,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2020-04-09
+                    2020-04-11
                 </div>
                 
 
@@ -465,53 +465,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <link href="http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">  
-<script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>  
-
-<p>本题计算距离的方式为<code>|x1-x2|+|y1-y2|</code>，因此可将二维距离问题转换为一维距离问题，即在x方向和y方向分别寻找最近距离。</p>
-<p>我们来研究一下在一维上的最近距离问题。</p>
-<p>在一维空间中，若只存在2个点，则若存在一点P使得两点到P点的距离之和最小，点P一定在两点之间。根据分治法的思想，若存在3点及以上的点，可先保证距离最远的两点到点P的距离之和最小，再保证距离第二远的两点到点P的距离之和最小，依次类推，最终剩下2个或1个点，若保证点P到此两点或一点的距离之和最小，则点p在这两点之间或就是那一点。综上，我们只需要按x和y方向分别对坐标排序，然后找出“中点”即可。改点即是到平面上所有点距离之和最小的点.</p>
-<pre><code class="cpp">#include&lt;iostream&gt;
-#include&lt;cmath&gt;
-using namespace std;
-void quicksort(int a[],int l,int r)
-{
-    if(l&lt;r)
-    {
-        int i=l,j=r,key=a[i];
-        while(i&lt;j)
-        {
-            while(i&lt;j&amp;&amp;a[j]&gt;=key)
-                j--;
-            if(i&lt;j)
-                a[i]=a[j];
-            while(i&lt;j&amp;&amp;a[i]&lt;key)
-                i++;
-            if(i&lt;j)
-                a[j]=a[i];
-        }
-        a[i]=key;
-        quicksort(a,l,i-1);
-        quicksort(a,i+1,r);
-    }
-}
-int main()
-{
-    int n,x[10000],y[10000],x1,y1,sum=0;
-    cin&gt;&gt;n;
-    for(int i=0; i&lt;n; i++)
-        cin&gt;&gt;x[i]&gt;&gt;y[i];
-    quicksort(x,0,n-1);
-    quicksort(y,0,n-1);
-    x1=x[n/2];
-    y1=y[n/2];
-    for(int i=0;i&lt;n;i++)
-        sum+=abs(x[i]-x1)+fabs(y[i]-y1);
-    cout&lt;&lt;sum&lt;&lt;endl;
-    return 0;
-}
-</code></pre>
-<script >hljs.initHighlightingOnLoad();</script>
+                
             </div>
             <hr/>
 
@@ -536,7 +490,7 @@ int main()
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://xx59469xx.github.io/2020/04/09/SWUST-OJ-493-PostOffice/">http://xx59469xx.github.io/2020/04/09/SWUST-OJ-493-PostOffice/</a>
+                    <a href="http://xx59469xx.github.io/tags/index.html">http://xx59469xx.github.io/tags/index.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -737,68 +691,29 @@ int main()
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="far fa-dot-circle"></i>&nbsp;Current
+            </div>
             <div class="card">
-                <a href="/2020/04/11/SWUST-OJ-249-%E5%87%B8%E5%8C%85%E9%9D%A2%E7%A7%AF/">
+                <a href="/tags/index.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="SWUST-OJ-249-凸包面积">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="tags">
                         
-                        <span class="card-title">SWUST-OJ-249-凸包面积</span>
+                        <span class="card-title">tags</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            本题可以不求出所有的凸包顶点，只求出三角形的面积即可。废话不多说，上代码。
-Ps: 因为是第一次写凸包，所以还是遵循了常规的思路，visit[105]中存了凸包点，快排专门为了结构体数组重新写了一个（也是为了熟悉一下不同形式的快排），当然也
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-04-11
-                        </span>
-                        <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            Bin xu
-                            
-                        </span>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                Next&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2020/04/07/%E4%B8%80%E4%B8%AA%E6%9C%89%E8%B6%A3%E7%9A%84%E8%A7%86%E9%A2%91/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="一个有趣的视频">
-                        
-                        <span class="card-title">一个有趣的视频</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            没什么好分享的，整个搞笑视频吧！   
-
-做人要有自己的原则，别被他人所左右
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-07
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-11
                             </span>
                         <span class="publish-author">
                             
@@ -808,6 +723,45 @@ Ps: 因为是第一次写凸包，所以还是遵循了常规的思路，visit[1
                         </span>
                     </div>
                 </div>
+
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                Current&nbsp;<i class="far fa-dot-circle"></i>
+            </div>
+            <div class="card">
+                <a href="/tags/index.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="tags">
+                        
+                        <span class="card-title">tags</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-11
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Bin xu
+                            
+                        </span>
+                    </div>
+                </div>
+
                 
             </div>
         </div>
