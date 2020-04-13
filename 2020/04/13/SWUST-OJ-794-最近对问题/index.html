@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="SWUST-OJ-249-凸包面积, 曲径通幽处">
+    <meta name="keywords" content="SWUST-OJ-794-最近对问题, 曲径通幽处">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>SWUST-OJ-249-凸包面积 | 曲径通幽处</title>
+    <title>SWUST-OJ-794-最近对问题 | 曲径通幽处</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -306,12 +306,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">SWUST-OJ-249-凸包面积</h1>
+                    <h1 class="description center-align post-title">SWUST-OJ-794-最近对问题</h1>
                 </div>
             </div>
         </div>
@@ -448,7 +448,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2020-04-11
+                    2020-04-13
                 </div>
                 
 
@@ -465,22 +465,29 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>本题可以不求出所有的凸包顶点，只求出三角形的面积即可。<br>废话不多说，上代码。</p>
-<p>Ps: 因为是第一次写凸包，所以还是遵循了常规的思路，<code>visit[105]</code>中存了凸包点，快排专门为了结构体数组重新写了一个（也是为了熟悉一下不同形式的快排），当然也可以使用标准库的<code>qsort()</code>函数.</p>
+                <p>经典的分治法题目。</p>
+<blockquote>
+<p>蛮力法：思路简单，算法效率为<code>O(n^2)</code>，虽然算法效率低，不过开发效率高。</p>
+<p>分治法：</p>
+<blockquote>
+<p>1.对于二维空间内所有点，坐标按X轴排序。<br>2.分治：将所有坐标分组，可分为2个一组或1个一组。两个一组的直接求出两点距离，一个一组的设置其两点间距离为一个大数（目的是为了保证递归的运行）。<br>3.合并：对于每两个进行合并的区域s1和s2，分别有对应的区域内的最小距离d1和d2，求出<code>d=min{d1,d2}</code>，按下标求出<code>s1Us2</code>区域的中间点<code>mid</code>，该点横坐标为<code>midx</code>，以中间点为界，若s1和s2区域中有点的横坐标落在<code>(midx-d,midx+d)</code>区域内，则将这些点放入新的空间内，这样的点不超过6个。对这些点求距离，取其中最小的与d比较，最终得出答案。</p>
+</blockquote>
+</blockquote>
+<hr>
+<p>附上一组数据：<br>19 6<br>15 89<br>25 94<br>-1 5<br>17 85<br>95 62<br>1 59<br>7 75<br>9 65<br>-2 36<br>-4 99<br>最近距离：4.4721<br>最近对是：(15,89)   (17,85)</p>
+<hr>
+<p>分治法：</p>
 <pre><code class="c++">#include&lt;iostream&gt;
-#include&lt;cmath&gt;
 #include&lt;stdio.h&gt;
-
+#include&lt;cmath&gt;
 using namespace std;
 
 struct point
 {
     double x,y;
-} p[105];
-int visit[105]= {0},n;
-double sum=0;
+} p[1000],p1[100];
 
-void quicksort(int l,int r)
+void quicksortx(int l,int r)
 {
     if(l&lt;r)
     {
@@ -492,80 +499,138 @@ void quicksort(int l,int r)
             if(i&lt;j)
             {
                 p[i].x=p[j].x;
-                p[i].y=p[j].y;//注意在交换x坐标的同时也交换y左边
+                p[i].y=p[j].y;
             }
             while(p[i].x&lt;key1&amp;&amp;i&lt;j)
                 i++;
             if(i&lt;j)
             {
                 p[j].x=p[i].x;
-                p[j].y=p[i].y;//同上
+                p[j].y=p[i].y;
             }
         }
         p[i].x=key1;
         p[i].y=key2;
-        quicksort(l,i-1);
-        quicksort(i+1,r);
+        quicksortx(l,i-1);
+        quicksortx(i+1,r);
     }
 }
 
-void upbag(int l,int r)//求上包
+void quicksorty(int l,int r)
 {
-    int max=0,flag;
-    for(int i=l; i&lt;r; i++)
+    if(l&lt;r)
     {
-        int d=p[l].x*p[i].y+p[r].x*p[l].y+p[i].x*p[r].y-p[r].x*p[i].y-p[i].x*p[l].y-p[l].x*p[r].y;//叉积公式
-        if(d&lt;0&amp;&amp;d&lt;max)
+        int i=l,j=r,key1=p1[i].x,key2=p1[i].y;
+        while(i&lt;j)
         {
-            max=d;
-            flag=i;
+            while(p1[j].y&gt;=key2&amp;&amp;i&lt;j)
+                j--;
+            if(i&lt;j)
+            {
+                p1[i].x=p1[j].x;
+                p1[i].y=p1[j].y;
+            }
+            while(p1[i].y&lt;key2&amp;&amp;i&lt;j)
+                i++;
+            if(i&lt;j)
+            {
+                p1[j].x=p1[i].x;
+                p1[j].y=p1[i].y;
+            }
         }
-    }
-    if(max)
-    {
-        visit[flag]=1;//此处标记凸包点，对于此题是多余的
-        sum+=fabs(max);
-        upbag(l,flag);
-        upbag(flag,r);
+        p1[i].x=key1;
+        p1[i].y=key2;
+        quicksorty(l,i-1);
+        quicksorty(i+1,r);
     }
 }
-
-void downbag(int l,int r)//求下包
+double mindist(int l,int r)
 {
-    int max=0,flag;
-    for(int i=l+1; i&lt;r; i++)
+    if((r-l+1)==1)
+        return 100000;
+    else if((r-l+1)==2)
+        return sqrt(pow(p[r].x-p[l].x,2)+pow(p[r].y-p[l].y,2));
+    else
     {
-        int d=p[l].x*p[i].y+p[r].x*p[l].y+p[i].x*p[r].y-p[r].x*p[i].y-p[i].x*p[l].y-p[l].x*p[r].y;
-        if(d&gt;0&amp;&amp;d&gt;max)
+        double d,d3;
+        double d1=mindist(l,(r+l)/2);
+        double d2=mindist((r+l)/2+1,r);
+        d=min(d1,d2);
+        int mid=(l+r)/2;
+        double midx=p[mid].x;
+        int j=0;
+        for(int i=l; i&lt;=r; i++)
+            if(abs(midx-p[i].x)&lt;d)
+            {
+                p1[j].x=p[i].x;
+                p1[j].y=p[i].y;
+                j++;
+            }
+        quicksorty(0,j-1);
+        double minn=100000;
+        for(int i=0; i&lt;j; i++)
         {
-            max=d;
-            flag=i;
+            for(int k=i+1; k&lt;j; k++)
+            {
+                d3=sqrt(pow(p1[k].x-p1[i].x,2)+pow(p1[k].y-p1[i].y,2));
+                if(d3&lt;minn)
+                    minn=d3;
+            }
         }
+        return min(d,minn);
     }
-    if(max)
-    {
-        visit[flag]=1;
-        sum+=fabs(max);
-        downbag(l,flag);
-        downbag(flag,r);
-    }
-
 }
+
 int main()
 {
-    int x;
+    int n,x;
     cin&gt;&gt;x;
     while(x--)
     {
         cin&gt;&gt;n;
         for(int i=0; i&lt;n; i++)
             cin&gt;&gt;p[i].x&gt;&gt;p[i].y;
-        quicksort(0,n-1);
-        visit[0]=visit[n-1]=1;
-        upbag(0,n-1);
-        downbag(0,n-1);
-        printf(&quot;%.1f\n&quot;,sum/2);
-        sum=0;//每次求完一个样例后要初始化一下
+        quicksortx(0,n-1);
+        double min1=mindist(0,n-1);
+        printf(&quot;%.4f\n&quot;,min1);
+    }
+    return 0;
+}</code></pre>
+<p>蛮力法：</p>
+<pre><code class="c++">#include&lt;iostream&gt;
+#include&lt;cmath&gt;
+#include&lt;stdio.h&gt;
+using namespace std;
+struct point
+{
+    double x,y;
+} p[1000];
+int main()
+{
+    int n,x,p1,p2;
+    double d=0,min=1000000;
+    cin&gt;&gt;x;
+    while(x--)
+    {
+        cin&gt;&gt;n;
+        for(int i=0; i&lt;n; i++)
+        {
+            cin&gt;&gt;p[i].x&gt;&gt;p[i].y;
+        }
+        for(int i=0; i&lt;n; i++)
+            for(int j=i+1; j&lt;n; j++)
+            {
+                d=sqrt((p[j].x-p[i].x)*(p[j].x-p[i].x)+(p[j].y-p[i].y)*(p[j].y-p[i].y));
+                if(d&lt;min)
+                {
+                    min=d;
+                    p1=i;
+                    p2=j;
+                }
+            }
+        printf(&quot;%.4f\n&quot;,min);
+        cout&lt;&lt;&quot;(&quot;&lt;&lt;p[p1].x&lt;&lt;&quot;,&quot;&lt;&lt;p[p1].y&lt;&lt;&quot;)&quot;&lt;&lt;&quot; &quot;&lt;&lt;&quot;(&quot;&lt;&lt;p[p2].x&lt;&lt;&quot;,&quot;&lt;&lt;p[p2].y&lt;&lt;&quot;)&quot;;
+        min=10000000;
     }
     return 0;
 }</code></pre>
@@ -594,7 +659,7 @@ int main()
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://xx59469xx.github.io/2020/04/11/SWUST-OJ-249-%E5%87%B8%E5%8C%85%E9%9D%A2%E7%A7%AF/">http://xx59469xx.github.io/2020/04/11/SWUST-OJ-249-%E5%87%B8%E5%8C%85%E9%9D%A2%E7%A7%AF/</a>
+                    <a href="http://xx59469xx.github.io/2020/04/13/SWUST-OJ-794-%E6%9C%80%E8%BF%91%E5%AF%B9%E9%97%AE%E9%A2%98/">http://xx59469xx.github.io/2020/04/13/SWUST-OJ-794-%E6%9C%80%E8%BF%91%E5%AF%B9%E9%97%AE%E9%A2%98/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -795,9 +860,10 @@ int main()
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="far fa-dot-circle"></i>&nbsp;Current
+            </div>
             <div class="card">
                 <a href="/2020/04/13/SWUST-OJ-794-%E6%9C%80%E8%BF%91%E5%AF%B9%E9%97%AE%E9%A2%98/">
                     <div class="card-image">
@@ -820,9 +886,9 @@ int main()
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-04-13
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-13
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -831,6 +897,7 @@ int main()
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -841,29 +908,25 @@ int main()
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/04/09/SWUST-OJ-493-PostOffice/">
+                <a href="/2020/04/11/SWUST-OJ-249-%E5%87%B8%E5%8C%85%E9%9D%A2%E7%A7%AF/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="SWUST OJ 493: PostOffice">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="SWUST-OJ-249-凸包面积">
                         
-                        <span class="card-title">SWUST OJ 493: PostOffice</span>
+                        <span class="card-title">SWUST-OJ-249-凸包面积</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                              
-  
-
-本题计算距离的方式为|x1-x2|+|y1-y2|，因此可将二维距离问题转换为一维距离问题，即在x方向和y方向分别寻找最近距离。
-我们来研究一下在一维上的最近距离问题。
-在一维空间中，若只存在2个点，则若存在一点P使得两点到P
+                            本题可以不求出所有的凸包顶点，只求出三角形的面积即可。废话不多说，上代码。
+Ps: 因为是第一次写凸包，所以还是遵循了常规的思路，visit[105]中存了凸包点，快排专门为了结构体数组重新写了一个（也是为了熟悉一下不同形式的快排），当然也
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-09
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-11
                             </span>
                         <span class="publish-author">
                             
